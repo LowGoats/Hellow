@@ -762,3 +762,111 @@ body {
   30%  { opacity: 1; }
   100% { opacity: 0; transform: translateY(-60px) scale(1.2); }
 }
+
+/* ===========================
+   MUSIC BAR
+=========================== */
+.music-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: white;
+  border-radius: 50px;
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 32px rgba(255, 107, 157, 0.25);
+  border: 2px solid rgba(255, 107, 157, 0.15);
+  z-index: 1000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+
+.music-bar.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.music-icon {
+  font-size: 1.3rem;
+  animation: spinNote 3s linear infinite;
+}
+
+@keyframes spinNote {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-15deg); }
+  75%  { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.music-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: var(--dark);
+}
+
+.music-sub {
+  font-size: 0.7rem;
+  color: #b08090;
+  font-weight: 600;
+}
+
+.music-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+}
+
+.music-waves span {
+  display: block;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(to top, var(--pink), var(--peach));
+  animation: wave 0.8s ease-in-out infinite;
+}
+
+.music-waves span:nth-child(1) { height: 8px;  animation-delay: 0s; }
+.music-waves span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+.music-waves span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+.music-waves span:nth-child(4) { height: 14px; animation-delay: 0.3s; }
+.music-waves span:nth-child(5) { height: 8px;  animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1); }
+}
+
+.music-waves.paused span {
+  animation-play-state: paused;
+  opacity: 0.4;
+}
+
+.music-toggle {
+  background: linear-gradient(135deg, var(--pink), var(--peach));
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.music-toggle:hover {
+  transform: scale(1.15);
+}
