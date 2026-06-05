@@ -200,3 +200,52 @@ function closePhoto() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closePhoto();
 });
+
+/* ===========================
+   MUSIC
+=========================== */
+let musicStarted = false;
+
+function startMusic() {
+  if (musicStarted) return;
+  const audio = document.getElementById('bg-music');
+  const bar = document.getElementById('music-bar');
+  audio.volume = 0;
+  audio.play().then(() => {
+    musicStarted = true;
+    bar.classList.add('visible');
+    // Fade in volume smoothly
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+      vol = Math.min(vol + 0.05, 0.7);
+      audio.volume = vol;
+      if (vol >= 0.7) clearInterval(fadeIn);
+    }, 80);
+  }).catch(() => {
+    // Autoplay blocked — still show bar, wait for user click
+    bar.classList.add('visible');
+    document.getElementById('music-toggle').textContent = '▶';
+    document.getElementById('music-waves').classList.add('paused');
+  });
+}
+
+function toggleMusic() {
+  const audio = document.getElementById('bg-music');
+  const btn = document.getElementById('music-toggle');
+  const waves = document.getElementById('music-waves');
+
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸';
+    waves.classList.remove('paused');
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+    waves.classList.add('paused');
+  }
+}
+
+// Trigger on scroll button click
+document.querySelector('.scroll-btn').addEventListener('click', () => {
+  startMusic();
+});
